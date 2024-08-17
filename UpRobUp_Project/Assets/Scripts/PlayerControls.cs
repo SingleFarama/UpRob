@@ -1,37 +1,33 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerControls : MonoBehaviour
 {
-    private Controls playerControls;
-    private void Awake()
+
+    public int Points = 0;
+
+    public float Timer = 5f;
+
+    private void Update()
     {
-        playerControls = new Controls();
+        Debug.Log(Points);
     }
 
-    private void OnEnable()
+    private void Build()
     {
-        playerControls.Enable();
+        if (Input.anyKey || gameObject.IsDestroyed())
+        {
+            Points++;
+        }
+        //Se ele apertar tecla correta
+        //- Contagem aumenta em 1
+        //- Construção aumenta em 1 andar
+
+        //Se apertar tecla incorreta
+        //- Contagem diminui em 1
+        //- Construção diminui me 1 andar
     }
 
-    private void OnDisable()
-    {
-        playerControls.Disable();
-    }
-
-    private void Start()
-    {
-        playerControls.Main.Controls.performed += ctx => Build(ctx.ReadValue<Vector2>());
-    }    
-
-    private void Build(Vector2 direction)
-    {
-        
-    }
-
-    private bool CanBuild(Vector2 direction)
-    {
-
-    }
 }
