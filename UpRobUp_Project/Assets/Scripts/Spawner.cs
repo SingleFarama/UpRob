@@ -14,7 +14,6 @@ public class Spawner : MonoBehaviour
     [SerializeField] private bool HasButton;
     [SerializeField] private GameObject[] Buttons;
     [SerializeField] private GameObject spawn;
-
     private void FixedUpdate()
     {
         if (!HasButton)

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Data;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -14,12 +15,15 @@ public class ButtonController : MonoBehaviour
     [SerializeField]
     private GameObject currentTeleporter;
     Interactable interactable;
+    PlayerControls playerControls;
 
     Transform InstanceInteractable;
 
     void Start()
     {
         interactable = FindObjectOfType<Interactable>();
+        playerControls = FindObjectOfType<PlayerControls>();
+        playerControls = GameObject.FindGameObjectWithTag("GameManager").GetComponent<PlayerControls>();
         InstanceInteractable = Interactable.InstanceInteractable.transform;
     }
 
@@ -27,12 +31,16 @@ public class ButtonController : MonoBehaviour
     {
         if (Input.GetKeyDown(keyToPress) && CanBePressed)
         {
+            playerControls.ButtonHit();
             Destroy(gameObject);
+        }
+        else if (Input.GetKeyDown(keyToPress) && !CanBePressed)
+        {
+            playerControls.ButtonFailed();
         }
         if (IsOnSpawner && !CanBePressed && interactable.HasButtonInteractable == false)
         {
             transform.position = InstanceInteractable.position;
-            print("Teleporte");
         }
     }
 
