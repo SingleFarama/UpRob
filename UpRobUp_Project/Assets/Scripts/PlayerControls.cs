@@ -14,6 +14,11 @@ public class PlayerControls : MonoBehaviour
 
     public float Timer = 5f;
 
+    void Start()
+    {
+        PointsText.text = "0";
+    } 
+
     public void ButtonHit()
     {
         print("Button Hit");
