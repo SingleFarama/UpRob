@@ -5,20 +5,16 @@ using UnityEngine;
 
 public class Spawner : MonoBehaviour
 {
-    Interactable interactable;
-    [SerializeField]
-    private bool HasButton;
-    [SerializeField]
-    private GameObject[] Buttons;
-    [SerializeField]
-    private GameObject spawn;
-    [SerializeField]
-    private GameObject Interaction;
-
-    private void Start()
+    [SerializeField] private Transform destination;
+    public Transform GetDestination()
     {
-        interactable = GetComponent<Interactable>();
+        return destination;
     }
+
+    [SerializeField] private bool HasButton;
+    [SerializeField] private GameObject[] Buttons;
+    [SerializeField] private GameObject spawn;
+
     private void FixedUpdate()
     {
         if (!HasButton)

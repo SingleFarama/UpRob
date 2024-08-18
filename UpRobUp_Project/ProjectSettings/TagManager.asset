@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Activator
   - Button
+  - Spawner
   layers:
   - Default
   - TransparentFX

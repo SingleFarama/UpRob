@@ -5,25 +5,34 @@ using UnityEngine.UIElements;
 
 public class ButtonController : MonoBehaviour
 {
-    PlayerControls playerControls; 
-    [SerializeField]
-    private SpriteRenderer sR;
-    [SerializeField]
+    [SerializeField] 
     private KeyCode keyToPress;
-
-    [SerializeField]
+    [SerializeField] 
     private bool CanBePressed;
+    [SerializeField] 
+    private bool IsOnSpawner;
+    [SerializeField]
+    private GameObject currentTeleporter;
+    Interactable interactable;
+
+    Transform InstanceInteractable;
+
     void Start()
     {
-        playerControls = GetComponent<PlayerControls>();
-        sR = GetComponent<SpriteRenderer>();
+        interactable = FindObjectOfType<Interactable>();
+        InstanceInteractable = Interactable.InstanceInteractable.transform;
     }
 
     void Update()
     {
-        if(Input.GetKeyDown(keyToPress) && CanBePressed)
+        if (Input.GetKeyDown(keyToPress) && CanBePressed)
         {
             Destroy(gameObject);
+        }
+        if (IsOnSpawner && !CanBePressed && interactable.HasButtonInteractable == false)
+        {
+            transform.position = InstanceInteractable.position;
+            print("Teleporte");
         }
     }
 
@@ -33,6 +42,11 @@ public class ButtonController : MonoBehaviour
         {
             CanBePressed = true;
         }
+        if (other.tag == "Spawner")
+        {
+            currentTeleporter = other.gameObject;
+            IsOnSpawner = true;
+        }
     }
     private void OnTriggerExit2D(Collider2D other)
     {
@@ -40,6 +54,18 @@ public class ButtonController : MonoBehaviour
         {
             CanBePressed = false;
         }
+        if (other.tag == "Spawner")
+        {
+            if (other.gameObject == currentTeleporter)
+            {
+                currentTeleporter = null;
+                IsOnSpawner = false;
+            }
+        }
     }
 
+    private void OnDestroy()
+    {
+        interactable.HasButtonInteractable = false;
+    }
 }
