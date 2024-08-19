@@ -16,13 +16,14 @@ public class ButtonController : MonoBehaviour
     private GameObject currentTeleporter;
     Interactable interactable;
     PlayerControls playerControls;
-
+    Spawner spawner;
     Transform InstanceInteractable;
 
     void Start()
     {
         interactable = FindObjectOfType<Interactable>();
         playerControls = FindObjectOfType<PlayerControls>();
+        spawner = FindObjectOfType<Spawner>();
         playerControls = GameObject.FindGameObjectWithTag("GameManager").GetComponent<PlayerControls>();
         InstanceInteractable = Interactable.InstanceInteractable.transform;
     }

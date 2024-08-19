@@ -10,6 +10,7 @@ public class PlayerControls : MonoBehaviour
 {
     public int CurrentPoints;
     public int PointsPerButton = 1;
+    public bool GainedPoint;
     public TextMeshProUGUI PointsText;
 
     public float Timer = 5f;
@@ -21,6 +22,7 @@ public class PlayerControls : MonoBehaviour
 
     public void ButtonHit()
     {
+        GainedPoint = true;
         print("Button Hit");
         CurrentPoints += PointsPerButton;
         PointsText.text = "" + CurrentPoints;
