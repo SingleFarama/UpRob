@@ -10,47 +10,68 @@ public class PlayerControls : MonoBehaviour
 {
     public int CurrentPoints;
     public int PointsPerButton = 1;
+    public int HighScore;
+    public int FailedButtons;
     public bool GainedPoint;
     public TextMeshProUGUI PointsText;
+    public TextMeshProUGUI HighPointsText;
+    FloorBuilding floorBuilding;
 
     public float Timer = 5f;
+    public float CurrentTimer;
+    public TextMeshProUGUI TimerText;
+    public AudioSource Music;
 
     void Start()
     {
-        PointsText.text = "0";
+        Music.Play();
+        floorBuilding = GetComponent<FloorBuilding>();
+        floorBuilding = FindObjectOfType<FloorBuilding>();
+        PointsText.text = "Current Floor: 0";
     } 
+
+    void Update()
+    {
+        if (CurrentPoints > HighScore)
+        {
+            HighScore = CurrentPoints;
+        }
+        HighPointsText.text = "Highest Floor: " + HighScore;
+
+        if (floorBuilding.StartedBuilding == true)
+        {
+            Timer = Timer - Time.deltaTime;
+            CurrentTimer = Timer;
+        }
+
+        if (CurrentTimer < 0f)
+        {
+            floorBuilding.StartedBuilding = false;
+        }
+        if (floorBuilding.StartedBuilding == false)
+        {
+            CurrentTimer = 5f;
+            PointsText.text = "Current Floor: 0";
+            CurrentPoints = 0;
+        }
+        TimerText.text = "Timer: " + CurrentTimer;
+
+    }
 
     public void ButtonHit()
     {
         GainedPoint = true;
-        print("Button Hit");
+        Timer = CurrentTimer + 1f;
         CurrentPoints += PointsPerButton;
-        PointsText.text = "" + CurrentPoints;
+        PointsText.text = "Current Floor: " + CurrentPoints;
     }
 
     public void ButtonFailed()
     {
-        print("Button Failed");
+        if (floorBuilding.StartedBuilding == true)
+        {
+            Timer = Timer - 1f;
+        }
     }
-
-    //private void Update()
-    //{
-    //    Debug.Log(Points);
-    //}
-
-    //private void Build()
-    //{
-       // if (Input.anyKey || gameObject.IsDestroyed())
-        //{
-        //    Points++;
-        //}
-        //Se ele apertar tecla correta
-        //- Contagem aumenta em 1
-        //- Construção aumenta em 1 andar
-
-        //Se apertar tecla incorreta
-        //- Contagem diminui em 1
-        //- Construção diminui me 1 andar
-    //}
 
 }

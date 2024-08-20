@@ -18,12 +18,18 @@ public class ButtonController : MonoBehaviour
     PlayerControls playerControls;
     Spawner spawner;
     Transform InstanceInteractable;
+    Secure secure;
+    FloorBuilding floorBuilding;
 
     void Start()
     {
         interactable = FindObjectOfType<Interactable>();
         playerControls = FindObjectOfType<PlayerControls>();
+        secure = FindObjectOfType<Secure>();
+        secure = GetComponent<Secure>();
         spawner = FindObjectOfType<Spawner>();
+        floorBuilding = GetComponent<FloorBuilding>();
+        floorBuilding = FindObjectOfType<FloorBuilding>();
         playerControls = GameObject.FindGameObjectWithTag("GameManager").GetComponent<PlayerControls>();
         InstanceInteractable = Interactable.InstanceInteractable.transform;
     }
@@ -33,6 +39,7 @@ public class ButtonController : MonoBehaviour
         if (Input.GetKeyDown(keyToPress) && CanBePressed)
         {
             playerControls.ButtonHit();
+            floorBuilding.StartedBuilding = true;
             Destroy(gameObject);
         }
         else if (Input.GetKeyDown(keyToPress) && !CanBePressed)
@@ -42,6 +49,10 @@ public class ButtonController : MonoBehaviour
         if (IsOnSpawner && !CanBePressed && interactable.HasButtonInteractable == false)
         {
             transform.position = InstanceInteractable.position;
+        }
+        if (playerControls.CurrentTimer < 0 && secure.IsOnsecurer == false)
+        {
+            Destroy(gameObject);
         }
     }
 

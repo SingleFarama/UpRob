@@ -8,6 +8,7 @@ TagManager:
   - Button
   - Spawner
   - GameManager
+  - Secure
   layers:
   - Default
   - TransparentFX

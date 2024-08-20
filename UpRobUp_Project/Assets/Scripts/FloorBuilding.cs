@@ -8,6 +8,7 @@ public class FloorBuilding : MonoBehaviour
     public GameObject Player;
     public GameObject[] Floors;
     public float position;
+    public bool StartedBuilding;
     private void Awake()
     {
         playerControls = FindObjectOfType<PlayerControls>();
@@ -18,13 +19,18 @@ public class FloorBuilding : MonoBehaviour
     {
         if (playerControls.GainedPoint)
         {
-            Player.transform.position = new Vector2(-2, position + 0.36f);
+            Player.transform.position = new Vector2(-1.5f, position + 0.36f);
             Instantiate(Floors[Random.Range(0, Floors.Length)], new Vector2(Player.transform.position.x, Player.transform.position.y), Player.transform.rotation);
             position = position + 2.5f;
-            Player.transform.position = new Vector2(-2, position);
+            Player.transform.position = new Vector2(-1.5f, position);
             playerControls.GainedPoint = false;
-            Player.transform.position = new Vector2(-2, position - 0.36f);
+            Player.transform.position = new Vector2(-1.5f, position - 0.36f);
         }    
+        if (playerControls.Timer < 0f)
+        {
+            StartedBuilding = false;
+        //    Player.transform.position = new Vector2(-1.5f, 2.43f);
+        }
             
     }
 
